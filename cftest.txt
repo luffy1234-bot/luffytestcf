@@ -1,0 +1,16 @@
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+})
+
+async function handleRequest(request) {
+  // Get country from the request headers using Cloudflare's IP geolocation
+  const country = request.headers.get('cf-ipcountry');
+
+  // Redirect to Shopee if user is from Thailand
+  if (country === 'TH') {
+    return Response.redirect('https://shopee.co.th/', 301);
+  }
+
+  // Otherwise, redirect to Google
+  return Response.redirect('https://www.google.com', 301);
+}
